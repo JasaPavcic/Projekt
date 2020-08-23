@@ -66,6 +66,6 @@ while True:
     os.system('cls' if os.name == 'nt' else 'clear')
     
     print('Dilerjeve karte: [{}][?]'.format(diler[0]))
-    print('Igralceve karte' + str(igralec))
+    print('Igralceve karte: [{}] ({})'.format(']['.join(igralec), 123))
 
     break
