@@ -5,20 +5,24 @@ import os
 def izracunaj_vsoto(roka):
     vsota = 0
 
-    ne_as = [karta for karta in roka if karta != 'As' or 'Ak' or 'Ap' or 'Aka']
-    As = [karta for karta in roka if karta == 'As' or 'Ak' or 'Ap' or 'Aka']
+    ne_as = [karta for karta in roka if karta[0] != 'A']
+    As = [karta for karta in roka if karta[0] == 'A']
 
     for karta in ne_as:
-        if karta in 'JQK':
+        if karta[0] in 'JQK':
+            vsota += 10
+        elif int(karta[0]) == 1:
             vsota += 10
         else:
-            vsota += int(karta)
+            vsota += int(karta[0])
+
+# asov ne sešteva dobro
 
     for karta in As:
         if vsota <= 10:
             vsota += 11
         else:
-            sum +=1
+            vsota += 1
 
     return vsota
 
@@ -62,10 +66,60 @@ diler.append(karte.pop())
 
 # TUKAJ SE MORAS UPOSTEVATI DRUGE IGRALCE
 
+standing = False
+prva_roka = True
+
 while True:
     os.system('cls' if os.name == 'nt' else 'clear')
-    
-    print('Dilerjeve karte: [{}][?]'.format(diler[0]))
-    print('Igralceve karte: [{}] ({})'.format(']['.join(igralec), 123))
 
-    break
+    igralceva_vsota = izracunaj_vsoto(igralec)
+    dilerjeva_vsota = izracunaj_vsoto(diler)
+
+    if standing:
+        print('Dilerjeve karte: [{}] Dilerjeva vsota: ({})'.format(']['.join(diler), dilerjeva_vsota))
+    else:
+        print('Dilerjeve karte: [{}][?]'.format(diler[0]))
+
+    print('Tvoje karte: [{}] Tvoja vsota: ({})'.format(']['.join(igralec), igralceva_vsota))
+    print("")
+
+
+    if standing:
+        if dilerjeva_vsota > 21:
+            print('Diler je BUSTED, zmagaš!')
+        elif dilerjeva_vsota == igralceva_vsota:
+            print('Izenačeno, vložek je povrnjen!')
+        elif igralceva_vsota > dilerjeva_vsota:
+            print('Zmagal si!')
+        else:
+            print('Zgubil si! :(')
+        break 
+
+    if prva_roka and igralceva_vsota == 21:
+        print('BLACKJACK, Zmagaš!')
+        break
+
+    if igralceva_vsota > 21:
+        print('Zgubil si! :(')
+        break
+
+
+
+
+# ne pozabi na split in double down
+
+    print('Kaj boste naredili?')
+    print('[1] hit')
+    print('[2] stand')
+
+    print("")
+    izbira = input('Tvoja izbira: ')
+    print("")
+
+    if izbira == '1':
+        igralec.append(karte.pop())
+    elif izbira == '2':
+        standing = True
+        while izracunaj_vsoto(diler) <= 16:
+            diler.append(karte.pop())
+
