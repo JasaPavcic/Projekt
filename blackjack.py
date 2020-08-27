@@ -45,6 +45,7 @@ nove_karte = [
 ]
 
 random.shuffle(karte)
+random.shuffle(nove_karte)
 
 
 # vsak ima svojo vsoto denarja od katere se odšteva
@@ -52,6 +53,9 @@ random.shuffle(karte)
 
 diler = []
 igralec = []
+igralec_denarnica = 50
+
+# stava = (nekaj z nekim inputom)
 
 
 
@@ -111,6 +115,17 @@ while True:
     print('Kaj boste naredili?')
     print('[1] hit')
     print('[2] stand')
+    print('[3] double down')
+
+
+# if x[0] == y[0] in igralec:
+#   print('[4] split')
+# else:
+#   pass
+
+# treba zrihtat, da ima igralec potem vbistvu 2 seznama in na vsakega posebaj dobi karto
+
+
 
     print("")
     izbira = input('Tvoja izbira: ')
@@ -122,4 +137,13 @@ while True:
         standing = True
         while izracunaj_vsoto(diler) <= 16:
             diler.append(karte.pop())
+    elif izbira == '3':
+        igralec.append(karte.pop())
+        # stava *= 2
+    # elif izbira == '4':
+    #  igralec_s1 = [igralec[0]]
+    #  igralec_s2 = [igralec[1]]
+    #  igralec_s1.append(karte.pop())
+    #  igralec_s2.append(karte.pop())
+
 
