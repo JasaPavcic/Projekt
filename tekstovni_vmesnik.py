@@ -1,0 +1,1 @@
+# vse kar se izpise na zaslonu
